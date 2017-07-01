@@ -1,28 +1,21 @@
 package com.multiplus.bot.context.aws.rekognition;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.rekognition.AmazonRekognition;
 import com.amazonaws.services.rekognition.AmazonRekognitionClientBuilder;
 import com.multiplus.bot.context.aws.credential.AWSCredentialContext;
 
-@Component
-public class AmazonRekognitionContext {
+import okhttp3.ResponseBody;
+
+public abstract class AmazonRekognitionContext {
 	
-	private final AmazonRekognition rekognitionClient;
+	protected final AmazonRekognition rekognitionClient;
 	
-	/**
-	 * Constructor.
-	 * @param credentialComponent {@link AWSCredentialContext}
-	 */
-	@Autowired
-	public AmazonRekognitionContext(AWSCredentialContext credentialComponent) {
+	protected AmazonRekognitionContext(AWSCredentialContext credentialContext) {
 		this.rekognitionClient = AmazonRekognitionClientBuilder.standard() //
-				.withRegion(Regions.US_EAST_2) //
-				.withCredentials(new AWSStaticCredentialsProvider(credentialComponent.getCredentials())) //
+				.withRegion(Regions.US_WEST_2) //
+				.withCredentials(new AWSStaticCredentialsProvider(credentialContext.getCredentials())) //
 				.build();
 	}
 	
@@ -33,4 +26,7 @@ public class AmazonRekognitionContext {
 	public AmazonRekognition getRekognition() {
 		return rekognitionClient;
 	}
+	
+	// TODO Type, Arguments, etc...
+	public abstract AmazonRekognition rekognite(ResponseBody content);
 }
