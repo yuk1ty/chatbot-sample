@@ -1,18 +1,10 @@
 package com.multiplus.bot.handlers;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.ByteBuffer;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.amazonaws.services.rekognition.model.AmazonRekognitionException;
-import com.amazonaws.services.rekognition.model.DetectLabelsRequest;
-import com.amazonaws.services.rekognition.model.DetectLabelsResult;
-import com.amazonaws.services.rekognition.model.Image;
-import com.amazonaws.services.rekognition.model.Label;
-import com.amazonaws.util.IOUtils;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.ImageMessageContent;
 import com.linecorp.bot.model.message.TextMessage;
@@ -20,6 +12,7 @@ import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 import com.multiplus.bot.context.aws.rekognition.SimlingDetectionRekognitionContext;
 import com.multiplus.bot.context.line.messaging.LineMessagingContext;
+import com.multiplus.bot.domain.aws.result.smile.SmileResult;
 
 import okhttp3.ResponseBody;
 import retrofit2.Response;
@@ -65,7 +58,7 @@ public class FaceEmotionHandler {
 	}
 
 	private TextMessage executeEmotionalRecognition(ResponseBody content) throws IOException, AmazonRekognitionException {
-		rekognitionContext.rekognite(content);
-		return new TextMessage("Successfully to read the image file.");
+		SmileResult smileResult = rekognitionContext.rekognite(content);
+		return new TextMessage(smileResult.getResultMessage());
 	}	
 }

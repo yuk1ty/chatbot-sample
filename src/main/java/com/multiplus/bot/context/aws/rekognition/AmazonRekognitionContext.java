@@ -8,7 +8,7 @@ import com.multiplus.bot.context.aws.credential.AWSCredentialContext;
 
 import okhttp3.ResponseBody;
 
-public abstract class AmazonRekognitionContext {
+public abstract class AmazonRekognitionContext<T> {
 	
 	protected final AmazonRekognition rekognitionClient;
 	
@@ -28,5 +28,5 @@ public abstract class AmazonRekognitionContext {
 	}
 	
 	// TODO Type, Arguments, etc...
-	public abstract AmazonRekognition rekognite(ResponseBody content);
+	public abstract T rekognite(ResponseBody content);
 }
