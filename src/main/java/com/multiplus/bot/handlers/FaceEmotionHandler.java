@@ -10,9 +10,9 @@ import com.linecorp.bot.model.event.message.ImageMessageContent;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
-import com.multiplus.bot.context.aws.rekognition.SimlingDetectionRekognitionContext;
+import com.multiplus.bot.context.aws.rekognition.FaceDetectionRekognitionContext;
 import com.multiplus.bot.context.line.messaging.LineMessagingContext;
-import com.multiplus.bot.domain.aws.result.smile.SmileResult;
+import com.multiplus.bot.model.entity.aws.result.smile.FaceDetectionResult;
 
 import okhttp3.ResponseBody;
 import retrofit2.Response;
@@ -22,10 +22,10 @@ public class FaceEmotionHandler {
 
 	private final LineMessagingContext lineMessagingContext;
 
-	private final SimlingDetectionRekognitionContext rekognitionContext;
+	private final FaceDetectionRekognitionContext rekognitionContext;
 
 	@Autowired
-	public FaceEmotionHandler(LineMessagingContext lineMessagingContext, SimlingDetectionRekognitionContext rekognitionContext) {
+	public FaceEmotionHandler(LineMessagingContext lineMessagingContext, FaceDetectionRekognitionContext rekognitionContext) {
 		this.lineMessagingContext = lineMessagingContext;
 		this.rekognitionContext = rekognitionContext;
 	}
@@ -58,7 +58,7 @@ public class FaceEmotionHandler {
 	}
 
 	private TextMessage executeEmotionalRecognition(ResponseBody content) throws IOException, AmazonRekognitionException {
-		SmileResult smileResult = rekognitionContext.rekognite(content);
+		FaceDetectionResult smileResult = rekognitionContext.rekognite(content);
 		return new TextMessage(smileResult.getResultMessage());
 	}	
 }

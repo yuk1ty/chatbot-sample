@@ -1,19 +1,19 @@
-package com.multiplus.bot.domain.aws.result.smile;
+package com.multiplus.bot.model.entity.aws.result.smile;
 
 import java.util.Objects;
 
-public class SmileResult {
+public class FaceDetectionResult {
 
 	private final String resultMessage;
 
 	private final Throwable exception;
 
-	public SmileResult(String resultMessage) {
+	public FaceDetectionResult(String resultMessage) {
 		this.resultMessage = Objects.requireNonNull(resultMessage);
 		this.exception = null;
 	}
 	
-	public SmileResult(String resultMessage, Throwable exception) {
+	public FaceDetectionResult(String resultMessage, Throwable exception) {
 		this.resultMessage = Objects.requireNonNull(resultMessage);
 		this.exception = exception;
 	}
