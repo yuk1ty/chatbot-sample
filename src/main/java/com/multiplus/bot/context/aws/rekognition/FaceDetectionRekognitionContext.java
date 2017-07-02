@@ -1,8 +1,6 @@
 package com.multiplus.bot.context.aws.rekognition;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.ByteBuffer;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +13,6 @@ import com.amazonaws.services.rekognition.model.DetectFacesResult;
 import com.amazonaws.services.rekognition.model.FaceDetail;
 import com.amazonaws.services.rekognition.model.Image;
 import com.amazonaws.services.rekognition.model.Smile;
-import com.amazonaws.util.IOUtils;
 import com.multiplus.bot.context.aws.credential.AWSCredentialContext;
 import com.multiplus.bot.model.entity.aws.result.smile.FaceDetectionResult;
 import com.multiplus.bot.model.exception.aws.smile.FaceDetectionContextException;
@@ -58,14 +55,6 @@ public class FaceDetectionRekognitionContext extends AmazonRekognitionContext<Fa
 			e.printStackTrace();
 			throw new FaceDetectionContextException(e.getMessage());
 		}
-	}
-
-	private ByteBuffer getBufferedImage(ResponseBody content) throws IOException {
-		ByteBuffer imageBytes;
-		try (InputStream inputStream = content.byteStream()) {
-			imageBytes = ByteBuffer.wrap(IOUtils.toByteArray(inputStream));
-		}
-		return imageBytes;
 	}
 
 	private FaceDetectionResult handleMessage(Smile smile) throws FaceDetectionContextException {

@@ -49,15 +49,17 @@ public class FaceEmotionHandler {
 				return new TextMessage("Sorry, can't read your image file.");
 			}
 		} catch (IOException e) {
+			// LINE Bot side
 			e.printStackTrace();
 			return new TextMessage("Sorry, file I/O error has been occurerd.");
 		} catch (AmazonRekognitionException e) {
+			// AWS Side
 			e.printStackTrace();
 			return new TextMessage("Sorry, unexpected error has been occured.");
 		}
 	}
 
-	private TextMessage executeEmotionalRecognition(ResponseBody content) throws IOException, AmazonRekognitionException {
+	private TextMessage executeEmotionalRecognition(ResponseBody content) {
 		FaceDetectionResult smileResult = rekognitionContext.rekognite(content);
 		return new TextMessage(smileResult.getResultMessage());
 	}	
